@@ -1,0 +1,29 @@
+!!! 5
+%html(lang="en")
+  %head
+    %title Kool cosole
+    %meta(charset="utf-8")
+    %meta(name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+    %meta(name="apple-mobile-web-app-capable" content="yes")
+    %meta(name="apple-mobile-web-app-status-bar-style" content="black")
+    %link(href="http://fonts.googleapis.com/css?family=Ubuntu:400,700" rel="stylesheet")
+    %link(href="/stylesheets/kool.css" rel="stylesheet")
+  %body
+    %h1
+      Kool Console
+
+    %p
+      A handy CoffeeScript console for presentations.
+
+    %p
+      Click or drag the bookmarklet below to your bookmarks bar.
+
+    %p
+      %a.bookmarklet(href="javascript:(function(){var s=document.createElement('script');s.src='http://localhost:4567/javascripts/kool-console.js';document.body.appendChild(s); var int=setInterval(function(){try{Konsole.showAndFocus();clearInterval(int)}catch(e){}},1000)})()")
+        Click or drag me
+
+    %p.made-by
+      Made with much love by
+      %a(href="https://twitter.com/julio_ody")@julio_ody
+      for
+      <a href="https://twitter.com/lisantapp">@lisantapp</a>.
