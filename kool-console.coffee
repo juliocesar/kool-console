@@ -1,0 +1,1 @@
+assets/javascripts/kool-console.coffee
