@@ -1,7 +1,7 @@
 (function() {
-  var CSS, Konsole, applyStyles, bindKeys, commitHistory, createTextField, focus, hide, history, installTextField, loadCoffeeScript, loadEl, loadHistory, run, runEffect, showAndFocus, showError, toggle, visible;
+  var CSS, Konsole, applyStyles, bindKeys, commitHistory, createTextField, focus, hide, history, installTextField, loadCoffeeScript, loadEl, loadHistory, run, showAndFocus, showOutput, toggle, visible;
 
-  CSS = ".konsole {\n  -webkit-transition: all .25s linear;\n  -moz-transition:    all .25s linear;\n  transition:         all .25s linear;\n  -webkit-transform:  translate(-50%, -65%);\n  -moz-transform:     translate(-50%, -65%);\n  transform:          translate(-50%, -65%);\n  box-sizing: border-box;\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  width: 80%;\n  padding: 10px;\n  font-size: 36px;\n  background: rgba(0, 0, 0, .75);\n  box-shadow: 0 0 30px black;\n  font-family: monospace;\n  color: white;\n  pointer-events: none;\n  opacity: 0;\n  outline: none;\n  border: 0 !important;\n  border-radius: 0 !important;\n  z-index: 100;\n}\n.konsole.visible {\n  opacity: 1;\n  pointer-events: auto;\n  box-shadow: 2px 2px 5px rgba(0, 0, 0, .35);\n}\n.konsole.ran,\n.konsole.error {\n  -webkit-transition: all .15s linear;\n  -moz-transition:    all .15s linear;\n  transition:         all .15s linear;\n  pointer-events: none;\n}\n.konsole.ran {\n  background: transparent;\n  color: transparent;\n  text-shadow: 0 0 20px white;\n}\n.konsole.error {\n  -webkit-transform:  translate(-50%, 35%);\n  -moz-transform:     translate(-50%, 35%);\n  transform:          translate(-50%, 35%);\n  background: #cd414d;\n  color: white;\n}";
+  CSS = ".konsole {\n  -webkit-transition: all .25s linear;\n  -moz-transition:    all .25s linear;\n  transition:         all .25s linear;\n  -webkit-transform:  translate(-50%, -65%);\n  -moz-transform:     translate(-50%, -65%);\n  transform:          translate(-50%, -65%);\n  box-sizing: border-box;\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  width: 80%;\n  padding: 10px;\n  font-size: 36px;\n  background: rgba(0, 0, 0, .75);\n  box-shadow: 0 0 30px black;\n  font-family: monospace;\n  color: white;\n  pointer-events: none;\n  opacity: 0;\n  outline: none;\n  border: 0 !important;\n  border-radius: 0 !important;\n  z-index: 100;\n}\n.konsole.visible {\n  opacity: 1;\n  pointer-events: auto;\n  box-shadow: 2px 2px 5px rgba(0, 0, 0, .35);\n}\n.konsole.no-error,\n.konsole.error {\n  -webkit-transition: all .15s linear;\n  -moz-transition:    all .15s linear;\n  transition:         all .15s linear;\n  -webkit-transform:  translate(-50%, 35%);\n  -moz-transform:     translate(-50%, 35%);\n  transform:          translate(-50%, 35%);\n  color: white\n  pointer-events: none;\n}\n.konsole.no-error {\n  background: #52bb3b;\n}\n.konsole.error {\n  background: #cd414d;\n}";
 
   history = [''];
 
@@ -126,25 +126,16 @@
     return loadEl.focus();
   };
 
-  runEffect = function() {
+  showOutput = function(options) {
     var ghost;
+    if (options == null) {
+      options = {};
+    }
     ghost = loadEl().cloneNode();
+    ghost.value = options.message;
     document.body.appendChild(ghost);
     setTimeout((function() {
-      return ghost.classList.add('ran');
-    }), 1);
-    return setTimeout((function() {
-      return document.body.removeChild(ghost);
-    }), 150);
-  };
-
-  showError = function(message) {
-    var ghost;
-    ghost = loadEl().cloneNode();
-    ghost.value = message;
-    document.body.appendChild(ghost);
-    setTimeout((function() {
-      return ghost.classList.add('error');
+      return ghost.classList.add(options.className);
     }), 1);
     return setTimeout((function() {
       return document.body.removeChild(ghost);
@@ -152,20 +143,26 @@
   };
 
   run = function() {
-    var e, el;
+    var e, el, output;
     el = loadEl();
     history[history.index] = el.value;
     history.push('');
     history.index = history.length - 1;
     commitHistory();
     try {
-      window["eval"](CoffeeScript.compile(el.value, {
+      output = window["eval"](CoffeeScript.compile(el.value, {
         bare: true
       }));
-      runEffect();
+      showOutput({
+        message: output.toString(),
+        className: 'no-error'
+      });
     } catch (_error) {
       e = _error;
-      showError(e.message);
+      showOutput({
+        message: e.message,
+        className: 'error'
+      });
     }
     return loadEl().value = history[history.index];
   };

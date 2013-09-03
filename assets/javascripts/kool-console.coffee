@@ -38,24 +38,22 @@ CSS = """
     pointer-events: auto;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, .35);
   }
-  .konsole.ran,
+  .konsole.no-error,
   .konsole.error {
     -webkit-transition: all .15s linear;
     -moz-transition:    all .15s linear;
     transition:         all .15s linear;
-    pointer-events: none;
-  }
-  .konsole.ran {
-    background: transparent;
-    color: transparent;
-    text-shadow: 0 0 20px white;
-  }
-  .konsole.error {
     -webkit-transform:  translate(-50%, 35%);
     -moz-transform:     translate(-50%, 35%);
     transform:          translate(-50%, 35%);
+    color: white
+    pointer-events: none;
+  }
+  .konsole.no-error {
+    background: #52bb3b;
+  }
+  .konsole.error {
     background: #cd414d;
-    color: white;
   }
 """
 
@@ -159,18 +157,11 @@ toggle = ->
 focus = ->
   loadEl.focus()
 
-# Special FX for feedback that the command ran.
-runEffect = ->
+showOutput = (options = {}) ->
   ghost = loadEl().cloneNode()
+  ghost.value = options.message
   document.body.appendChild ghost
-  setTimeout (-> ghost.classList.add 'ran'), 1
-  setTimeout (-> document.body.removeChild ghost), 150
-
-showError = (message) ->
-  ghost = loadEl().cloneNode()
-  ghost.value = message
-  document.body.appendChild ghost
-  setTimeout (-> ghost.classList.add 'error'), 1
+  setTimeout (-> ghost.classList.add options.className), 1
   setTimeout (-> document.body.removeChild ghost), 3000
 
 # Runs a script in the window context.
@@ -181,10 +172,10 @@ run = ->
   history.index = history.length-1
   commitHistory()
   try
-    window.eval CoffeeScript.compile(el.value, bare: yes)
-    runEffect()
+    output = window.eval CoffeeScript.compile(el.value, bare: yes)
+    showOutput message: output.toString(), className: 'no-error'
   catch e
-    showError e.message
+    showOutput message: e.message, className: 'error'
   loadEl().value = history[history.index]
 
 # Exports.
