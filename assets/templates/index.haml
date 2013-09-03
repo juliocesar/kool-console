@@ -1,7 +1,7 @@
 !!! 5
 %html(lang="en")
   %head
-    %title Kool cosole
+    %title Kool Console
     %meta(charset="utf-8")
     %meta(name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
     %meta(name="apple-mobile-web-app-capable" content="yes")
@@ -19,8 +19,9 @@
       Click or drag the bookmarklet below to your bookmarks bar.
 
     %p
-      %a.bookmarklet(href="javascript:(function(){var s=document.createElement('script');s.src='http://localhost:4567/javascripts/kool-console.js';document.body.appendChild(s); var int=setInterval(function(){try{Konsole.showAndFocus();clearInterval(int)}catch(e){}},1000)})()")
-        Click or drag me
+      %a.bookmarklet(title="Click or drag me" href="javascript:(function(){var s=document.createElement('script');s.src='http://localhost:4567/javascripts/kool-console.js';document.body.appendChild(s); var int=setInterval(function(){try{Konsole.showAndFocus();clearInterval(int)}catch(e){}},1000)})()")
+        %span.text
+          Kool Console
 
     %p.made-by
       Made with much love by
