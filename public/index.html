@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <title>Kool Console</title>
+    <meta charset='utf-8'>
+    <meta content='width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' name='viewport'>
+    <meta content='yes' name='apple-mobile-web-app-capable'>
+    <meta content='black' name='apple-mobile-web-app-status-bar-style'>
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu:400,700' rel='stylesheet'>
+    <link href='/stylesheets/kool.css' rel='stylesheet'>
+  </head>
+  <body>
+    <h1>
+      Kool Console
+    </h1>
+    <p>
+      A handy CoffeeScript console for presentations.
+    </p>
+    <p>
+      Click or drag the bookmarklet below to your bookmarks bar.
+    </p>
+    <p>
+      <a class='bookmarklet' href="javascript:(function(){var s=document.createElement('script');s.src='http://localhost:4567/javascripts/kool-console.js';document.body.appendChild(s); var int=setInterval(function(){try{Konsole.showAndFocus();clearInterval(int)}catch(e){}},1000)})()" title='Click or drag me'>
+        <span class='text'>
+          Kool Console
+        </span>
+      </a>
+    </p>
+    <p class='made-by'>
+      Made with much love by
+      <a href='https://twitter.com/julio_ody'>@julio_ody</a>
+      for
+      <a href="https://twitter.com/lisantapp">@lisantapp</a>.
+    </p>
+    <script src='/javascripts/kool-console.js'></script>
+  </body>
+</html>
