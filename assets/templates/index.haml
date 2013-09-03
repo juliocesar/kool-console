@@ -19,7 +19,10 @@
       Click or drag the bookmarklet below to your bookmarks bar.
 
     %p
-      %a.bookmarklet(title="Click or drag me" href="javascript:(function(){var s=document.createElement('script');s.src='http://kool-console.herokuapp.com/javascripts/kool-console.js';document.body.appendChild(s); var int=setInterval(function(){try{Konsole.showAndFocus();clearInterval(int)}catch(e){}},1000)})()")
+      Toggle it with &lt;Control/⌘&gt; + K.
+
+    %p
+      %a.bookmarklet(title="Click or drag me" href="javascript:(function(){if(document.querySelector('.konsole')) return Konsole.showAndFocus(); var s=document.createElement('script');s.src='http://kool-console.herokuapp.com/javascripts/kool-console.js';document.body.appendChild(s); var int=setInterval(function(){try{Konsole.showAndFocus();clearInterval(int)}catch(e){}},1000)})()")
         %span.text
           Kool Console
 
