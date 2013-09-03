@@ -292,20 +292,6 @@ namespace :hopla do
     end
   end
 end
-
-namespace :skillsbuilder do
-  desc "Copies compiled assets into sibling directory for cordova"
-  task :cordova do
-    Hopla.logger.info "Copying files"
-    js = "#{Dir.pwd}/../skillsbuilder-cordova/www/js/index.js"
-    css =  "#{Dir.pwd}/../skillsbuilder-cordova/www/css/index.css"
-    File.delete js rescue nil
-    File.delete css rescue nil
-
-    FileUtils.cp "#{Dir.pwd}/public/javascripts/manifest.js", js
-    FileUtils.cp "#{Dir.pwd}/public/stylesheets/manifest.css", css
-  end
-end
 # ---
 
 # Default rake task for when ran as `rake hopla`.
