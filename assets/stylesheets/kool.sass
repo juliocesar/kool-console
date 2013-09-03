@@ -29,29 +29,18 @@ a
   color: lighten(black, 50%)
   text-decoration: none
 
+.made-by
+  font-size: 16px
+
 .bookmarklet
-  content: 'Click or drag me'
   padding: 5px
   cursor: pointer
-
-  &:hover
-
-    &:after,
-    &:before
-      -webkit-transform: scale(1.2)
-      -moz-transform: scale(1.2)
-      transform: scale(1.2)
-
-  &:after,
-  &:before
-    display: inline-block
-    -webkit-transition: all .1s linear
-    -moz-transition: all .1s linear
-    transition: all .1s linear
-    font-weight: bold
-
-  &:after
-    content: ']'
+  width: 100px
+  border-bottom: 3px dotted lighten(black, 50%)
 
   &:before
-    content: '['
+    content: attr(title)
+
+  .text
+    display: none
+
