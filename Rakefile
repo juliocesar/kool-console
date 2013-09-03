@@ -40,9 +40,6 @@ class String
   def /(to) File.join(self, to); end
 end
 
-# Git remotes.
-STAGING_REMOTE = 'heroku'
-
 # Helpers.
 def packaged?
   File.exists? Dir.pwd + '/public/index.html' and
@@ -279,16 +276,6 @@ namespace :hopla do
     if `git log -1` =~ /DEPLOYMENT - DELETE ME/
       `git reset --hard HEAD^1`
       Hopla.logger.info "Reverted exist static assets commit"
-    end
-  end
-
-  namespace :deploy do
-    desc "Compiles, compresses, and deploys the app to staging"
-    task :staging do
-      Rake::Task['hopla:commit'].invoke
-      Hopla.logger.info "Deploying to staging. This could take a minute."
-      `git push --force #{STAGING_REMOTE} master`
-      Rake::Task['hopla:delete_commit'].invoke
     end
   end
 end
