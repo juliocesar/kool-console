@@ -201,4 +201,3 @@ applyStyles()
 installTextField()
 bindKeys()
 loadHistory()
-
